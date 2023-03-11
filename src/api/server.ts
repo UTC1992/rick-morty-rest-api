@@ -1,14 +1,23 @@
 import express, { Application } from 'express';
-import config from '../config/default';
+
+import {environment} from '../config/default';
+import { dbConnection } from '../database/databaseConfig';
 
 class Server {
-  private app: Application;
+  private app: Application
 
   private port: string;
 
   constructor() {
     this.app = express();
-    this.port = config.PORT || '8080';
+    this.port = environment.PORT || '8080';
+
+    this.connectDB();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async connectDB(): Promise<void> {
+    await dbConnection();
   }
 
   listen(): void {
