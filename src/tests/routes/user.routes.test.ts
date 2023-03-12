@@ -132,7 +132,7 @@ describe( 'User Routes', () => {
 
   describe( 'GET /verify-exist-email/:email', () => {
     describe( 'Validation when the email already exist', () => {
-      it( 'should return status 200 and value', async () => {
+      it( 'should return status 200 and value: true', async () => {
         await api.post( '/api/user' )
           .set( 'Accept', 'application/json' )
           .send( userMock )
@@ -148,7 +148,7 @@ describe( 'User Routes', () => {
 
   describe( 'GET /verify-exist-nickname/:nickname', () => {
     describe( 'Validation when the nickname already exist', () => {
-      it( 'should return status 200 and value ', async () => {
+      it( 'should return status 200 and value: true ', async () => {
         await api.post( '/api/user' )
           .set( 'Accept', 'application/json' )
           .send( userMock )
