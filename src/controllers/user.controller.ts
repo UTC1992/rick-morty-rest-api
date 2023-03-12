@@ -8,9 +8,9 @@ import { saveUser } from '../services/user.services';
 export const createUser = async ( req: Request, res: Response ): Promise<void> => {
   try {
     const { fullName, nickname, email, password } = req.body as IUser
-    const encryptedPass = bcryptjs.genSaltSync()
+    const salt = bcryptjs.genSaltSync()
 
-    const encryptedPassword = bcryptjs.hashSync( password, encryptedPass )
+    const encryptedPassword = bcryptjs.hashSync( password, salt )
 
     const user = await saveUser({ fullName, nickname, email, password: encryptedPassword })
 

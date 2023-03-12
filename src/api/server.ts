@@ -3,6 +3,7 @@ import express, { Application } from 'express';
 
 import {environment} from '../config/default';
 import { dbConnection } from '../database/databaseConfig';
+import routerAuth from '../routes/auth.routes';
 import routerUser from '../routes/user.routes';
 
 
@@ -32,6 +33,7 @@ class Server {
 
   routes(): void {
     this.app.use( '/api/user', routerUser );
+    this.app.use( '/api/auth', routerAuth );
   }
 
   listen(): void {
