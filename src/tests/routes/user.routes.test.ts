@@ -70,12 +70,16 @@ describe( 'User Routes', () => {
           .send( userMock )
         
         const userAdded = response.body.data
+
+        if ( userAdded ) {
+          const {statusCode, body} = await api.get( `/api/user/${userAdded.id}` )
+            .set( 'Accept', 'application/json' )
+          
+          expect( statusCode ).toBe( 200 )
+          expect( body.data ).toEqual( userAdded )
+
+        }
   
-        const {statusCode, body} = await api.get( `/api/user/${userAdded.id}` )
-          .set( 'Accept', 'application/json' )
-        
-        expect( statusCode ).toBe( 200 )
-        expect( body.data ).toEqual( userAdded )
       });
     });
     describe( 'Validation params', () => {

@@ -11,13 +11,13 @@ const api = supertest( server.app )
 
 const userMock = {
   fullName: 'Demo',
-  nickname: 'Demo123',
-  email: 'demo@gmail.com',
+  nickname: 'Demo1234',
+  email: 'demo1@gmail.com',
   password: '123456'
 }
 
 const authDataMock = {
-  email: 'demo@gmail.com',
+  email: 'demo1@gmail.com',
   password: '123456'
 }
 
@@ -27,7 +27,7 @@ const authDataIncorrectEmailMock = {
 }
 
 const authDataIncorrectPassMock = {
-  email: 'demo@gmail.com',
+  email: 'demo1@gmail.com',
   password: '12345678'
 }
 
@@ -35,7 +35,8 @@ beforeEach( async() => {
   await UserModel.deleteMany({})
 })
 
-afterAll(() => {
+afterAll( async() => {
+  await UserModel.deleteMany({})
   mongoose.connection.close()
 })
 
@@ -45,17 +46,18 @@ describe( 'Authentication', () => {
       const user = await api.post( '/api/user' )
         .set( 'Accept', 'application/json' )
         .send( userMock )
-
+        
       const {statusCode, body} = await api.post( '/api/auth' )
         .set( 'Accept', 'application/json' )
         .send( authDataMock )
-
+      
       const token = await generateJWT( user.body.data.id )
 
       expect( statusCode ).toBe( 200 )
       expect( body.data.user ).toBeTruthy()
       expect( body.data.token ).toBeTruthy()
       expect( body.data.token ).toBe( token )
+      
     });
   });
 

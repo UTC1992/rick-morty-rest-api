@@ -5,27 +5,32 @@ interface IUser {
   nickname: string
   email: string
   password: string
+  image?: string
 }
 
 
 const userSchema = new Schema<IUser>({
   fullName: {
     type: String,
-    require: [true, 'The name is required'],
+    required: [true, 'The name is required'],
   },
   nickname: {
     type: String,
-    require: [true, 'The nickname is required'],
+    required: [true, 'The nickname is required'],
     unique: true,
   },
   email: {
     type: String,
-    require: [true,  'The email is required'],
+    required: [true,  'The email is required'],
     unique: true,
   },
   password: {
     type: String,
-    require: [true, 'The password is required']
+    required: [true, 'The password is required']
+  },
+  image: {
+    type: String,
+    required: [false]
   }
 })
 

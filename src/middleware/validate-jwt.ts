@@ -23,6 +23,7 @@ export const validateJWT = async (
     if ( typeof dataToken !== 'string' ) {
       idUser = dataToken.id
     }
+    
     const user = await UserModel.findById( idUser );
 
     if ( !user ) {
