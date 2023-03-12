@@ -5,8 +5,8 @@ import {environment} from '../config/default';
 import { dbConnection } from '../database/databaseConfig';
 import routerAuth from '../routes/auth.routes';
 import routerCharacter from '../routes/character.routes';
+import routerUpload from '../routes/upload.routes';
 import routerUser from '../routes/user.routes';
-
 
 
 class Server {
@@ -36,6 +36,7 @@ class Server {
     this.app.use( '/api/user', routerUser );
     this.app.use( '/api/auth', routerAuth );
     this.app.use( '/api/character', routerCharacter );
+    this.app.use( '/api/upload', routerUpload );
   }
 
   listen(): void {
