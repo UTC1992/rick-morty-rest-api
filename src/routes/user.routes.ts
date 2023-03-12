@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
-import { createUser } from '../controllers/user.controller';
-import { validateExistEmail, validateExistNickname } from '../helpers/db-validator';
+import { createUser, getUserById } from '../controllers/user.controller';
+import { validateExistEmail, validateExistNickname, validateExistUserById } from '../helpers/db-validator';
 import { validateFields } from '../middleware/validate-fields';
 
 const routerUser = Router()
@@ -16,5 +16,11 @@ routerUser.post( '/', [
   check( 'password', 'The password should have more than 6 characters' ).isLength({ min: 6 }),
   validateFields,
 ], createUser )
+
+routerUser.get( '/:id', [
+  check( 'id', 'Id is not valid' ).isMongoId(),
+  check( 'id' ).custom( validateExistUserById ),
+  validateFields
+], getUserById )
 
 export default routerUser

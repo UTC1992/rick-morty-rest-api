@@ -35,3 +35,19 @@ export const errorsUserUniqueField = [
     location: 'body'
   }
 ]
+
+
+export const errorsUserId =  [
+  {
+    value: 'abc',
+    msg: 'Id is not valid',
+    param: 'id',
+    location: 'params'
+  },
+  {
+    value: '640d3c980ecbf41c165bb8ce',
+    msg: 'The user with id: 640d3c980ecbf41c165bb8ce, doesn\'t exist.',
+    param: 'id',
+    location: 'params'
+  }
+]
