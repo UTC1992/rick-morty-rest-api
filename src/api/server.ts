@@ -8,7 +8,7 @@ import routerUser from '../routes/user.routes';
 
 
 class Server {
-  private app: Application
+  public app: Application
 
   private port: string;
 

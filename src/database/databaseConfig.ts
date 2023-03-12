@@ -4,7 +4,7 @@ import { environment } from '../config/default'
 
 export const dbConnection = async (): Promise<void> => {
   try {
-    await mongoose.connect( environment.DATABASE_NAME )
+    await mongoose.connect( environment.DATABASE )
     console.log( 'Database online' )
   } catch ( error ) {
     console.log( error )
