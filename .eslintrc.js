@@ -215,7 +215,8 @@ module.exports = {
 
     '@typescript-eslint/no-explicit-any': ['warn', { 'ignoreRestArgs': false }],
 
-    'no-console': 'off'
+    'no-console': 'off',
+    'consistent-return': 'off'
 
   },
   'settings': {
