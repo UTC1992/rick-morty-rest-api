@@ -4,7 +4,7 @@ import supertest from 'supertest';
 
 import Server from '../../api/server';
 import { UserModel } from '../../models/user.model';
-import { errorsUserValidate, errorsUserUniqueField, errorsUserId } from '../fixtures/errors.validation';
+import { errorsUserValidate, errorsUserId } from '../fixtures/errors.validation';
 
 const server = new Server()
 const api = supertest( server.app )
@@ -59,40 +59,8 @@ describe( 'User Routes', () => {
           expect( body.errors ).toEqual( errorsUserValidate )
         });
       });
-      
-      describe( 'Validation when the email already exist', () => {
-        it( 'should return status 400 add error email message', async () => {
-          await api.post( '/api/user' )
-            .set( 'Accept', 'application/json' )
-            .send( userMock )
-  
-          const {statusCode, body} = await api.post( '/api/user' )
-            .set( 'Accept', 'application/json' )
-            .send( userMock )
-  
-          expect( statusCode ).toBe( 400 )
-          expect( body.errors[1]).toEqual( errorsUserUniqueField[1])
-        });
-      });
-  
-      describe( 'Validation when the nickname already exist', () => {
-        it( 'should return status 400 and error nickname message ', async () => {
-          await api.post( '/api/user' )
-            .set( 'Accept', 'application/json' )
-            .send( userMock )
-  
-          const {statusCode, body} = await api.post( '/api/user' )
-            .set( 'Accept', 'application/json' )
-            .send( userMock )
-  
-          expect( statusCode ).toBe( 400 )
-          expect( body.errors[0]).toEqual( errorsUserUniqueField[0])
-        });
-      });
     });
   });
-
-  
 
   describe( 'GET /:id', () => {
     describe( 'When the GET is success', () => {
@@ -135,4 +103,62 @@ describe( 'User Routes', () => {
     });
   });
 
+  describe( 'PUT /:id', () => {
+    describe( 'When the PUT is success', () => {
+      it( 'should return status 200 and user updated', async() => {
+        const response = await api.post( '/api/user' )
+          .set( 'Accept', 'application/json' )
+          .send( userMock )
+        
+        const userAdded = response.body.data
+        
+        const userToEdit = {
+          fullName: 'Demo',
+          nickname: 'Demo123', 
+          email: 'demonew@gmail.com',
+          password: '123456',
+        }
+
+        const {statusCode, body} = await api.put( `/api/user/${userAdded.id}` )
+          .set( 'Accept', 'application/json' )
+          .send( userToEdit )
+
+        expect( statusCode ).toBe( 200 )
+        expect( body.data.email ).toEqual( userToEdit.email )
+        
+      });
+    });
+  });
+
+  describe( 'GET /verify-exist-email/:email', () => {
+    describe( 'Validation when the email already exist', () => {
+      it( 'should return status 200 and value', async () => {
+        await api.post( '/api/user' )
+          .set( 'Accept', 'application/json' )
+          .send( userMock )
+
+        const {statusCode, body} = await api.get( `/api/user/verify-exist-email/${userMock.email}` )
+          .set( 'Accept', 'application/json' )
+
+        expect( statusCode ).toBe( 200 )
+        expect( body.data ).toBe( true )
+      });
+    });
+  });
+
+  describe( 'GET /verify-exist-nickname/:nickname', () => {
+    describe( 'Validation when the nickname already exist', () => {
+      it( 'should return status 200 and value ', async () => {
+        await api.post( '/api/user' )
+          .set( 'Accept', 'application/json' )
+          .send( userMock )
+
+        const {statusCode, body} = await api.get( `/api/user/verify-exist-nickname/${userMock.nickname}` )
+          .set( 'Accept', 'application/json' )
+
+        expect( statusCode ).toBe( 200 )
+        expect( body.data ).toBe( true )
+      });
+    });
+  });
 });
