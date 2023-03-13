@@ -3,7 +3,7 @@ import { model, Schema } from 'mongoose';
 interface ICharacter {
   image: string
   name: string
-  ranking: number
+  rating: number
   comment: string
 }
 
@@ -16,7 +16,7 @@ const characterSchema = new Schema<ICharacter>({
     type: String,
     required: [true, 'The name is required'],
   },
-  ranking: {
+  rating: {
     type: Number,
     required: [true, 'The ranking is required'],
   },

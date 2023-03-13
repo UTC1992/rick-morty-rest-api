@@ -44,7 +44,6 @@ export const getImage = async ( req: Request, res: Response ): Promise<void> => 
 
     res.status( 200 ).sendFile( pathImage );
   } catch ( error ) {
-    console.log( error )
     res.status( 500 ).json({
       status: 'error',
       error: 'Ops, it was an error in server'

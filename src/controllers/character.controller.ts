@@ -5,9 +5,9 @@ import { saveCharacter } from '../services/character.services'
 
 export const createCharacter = async ( req: Request, res: Response ): Promise<void> => {
   try{
-    const { image, name, ranking, comment } = req.body as ICharacter
+    const { image, name, rating, comment } = req.body as ICharacter
 
-    const character = await saveCharacter({ image, name, ranking, comment })
+    const character = await saveCharacter({ image, name, rating, comment })
 
     res.status( 201 ).json({
       status: 'success',
