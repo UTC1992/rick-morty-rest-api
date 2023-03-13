@@ -134,7 +134,7 @@ describe( 'User Routes', () => {
     });
   });
 
-  describe( 'GET /verify-exist-email/:email', () => {
+  describe( 'GET /verify-exist-email/:id/:email', () => {
     describe( 'Validation when the email already exist', () => {
       it( 'should return status 200 and value: true', async () => {
         await api.post( '/api/user' )
@@ -150,18 +150,18 @@ describe( 'User Routes', () => {
     });
   });
 
-  describe( 'GET /verify-exist-nickname/:nickname', () => {
+  describe( 'GET /verify-exist-nickname/:id/:nickname', () => {
     describe( 'Validation when the nickname already exist', () => {
       it( 'should return status 200 and value: true ', async () => {
-        await api.post( '/api/user' )
+        const response = await api.post( '/api/user' )
           .set( 'Accept', 'application/json' )
           .send( userMock )
 
-        const {statusCode, body} = await api.get( `/api/user/verify-exist-nickname/${userMock.nickname}` )
+        const {statusCode, body} = await api.get( `/api/user/verify-exist-nickname/${userMock.nickname}/${response.body.data.id}` )
           .set( 'Accept', 'application/json' )
 
         expect( statusCode ).toBe( 200 )
-        expect( body.data ).toBe( true )
+        expect( body.data ).toBe( false )
       });
     });
   });

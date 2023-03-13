@@ -82,12 +82,13 @@ export const verifyExistEmail = async ( req: Request, res: Response ): Promise<v
 
 export const verifyExistNickname = async ( req: Request, res: Response ): Promise<void> => {
   try {
-    const { nickname } = req.params
+    const { nickname, id } = req.params
     const user = await UserModel.findOne({nickname})
 
+    
     res.status( 200 ).json({
       status: 'success',
-      data: !!user
+      data: ( user?.id !== id && user?.nickname === nickname )
     })
   } catch ( error ) {
     res.status( 500 ).json({

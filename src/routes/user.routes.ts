@@ -31,6 +31,6 @@ routerUser.put( '/:id', [
 
 routerUser.get( '/verify-exist-email/:email', verifyExistEmail )
 
-routerUser.get( '/verify-exist-nickname/:nickname', verifyExistNickname )
+routerUser.get( '/verify-exist-nickname/:nickname/:id', verifyExistNickname )
 
 export default routerUser
